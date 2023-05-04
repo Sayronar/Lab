@@ -79,7 +79,7 @@ public class OrganizationRaw {
         info += "'Сырая' организация";
         info += "\n Название: " + name;
         info += "\n Местоположение: " + coordinates;
-        info += "\n Annual turnover: " + annualTurnover;
+        info += "\n Годовой оборот: " + annualTurnover;
         info += "\n Полное название: " + fullName;
         info += "\n Количество сотрудников: " + employeesCount;
         info += "\n Тип организации: " + type;
