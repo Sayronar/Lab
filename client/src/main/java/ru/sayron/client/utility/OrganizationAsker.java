@@ -1,59 +1,73 @@
 package ru.sayron.client.utility;
 
 import ru.sayron.client.Main;
-// import common.data.*;
-// import common.exceptions.IncorrectInputInScriptException;
-// import common.exceptions.MustBeNotEmptyException;
-// import common.exceptions.NotInDeclaredLimitsException;
-// import common.utility.Outputer;
+import ru.sayron.common.exceptions.*;
+import ru.sayron.common.data.*;
+import ru.sayron.common.utility.Outputer;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+
+/**
+ * Asks a user a organization's value.
+ */
 public class OrganizationAsker {
+    private final Long MIN_EMPLOYEES = 1L;
+    private final int MIN_TURNOVER = 1;
+
     private Scanner userScanner;
     private boolean fileMode;
 
-    public MarineAsker(Scanner userScanner) {
+    public OrganizationAsker(Scanner userScanner) {
         this.userScanner = userScanner;
         fileMode = false;
     }
 
     /**
-     * Sets marine asker mode to 'File Mode'.
+     * Sets a scanner to scan user input.
+     * @param userScanner Scanner to set.
+     */
+    public void setUserScanner(Scanner userScanner) {
+        this.userScanner = userScanner;
+    }
+
+    /**
+     * @return Scanner, which uses for user input.
+     */
+    public Scanner getUserScanner() {
+        return userScanner;
+    }
+
+    /**
+     * Sets organization asker mode to 'File Mode'.
      */
     public void setFileMode() {
         fileMode = true;
     }
 
     /**
-     * Sets marine asker mode to 'User Mode'.
+     * Sets organization asker mode to 'User Mode'.
      */
     public void setUserMode() {
         fileMode = false;
     }
 
-    /**
-     * Asks a user the marine's name.
-     *
-     * @return Marine's name.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
     public String askName() throws IncorrectInputInScriptException {
         String name;
         while (true) {
             try {
-                Outputer.println("Введите имя:");
-                Outputer.print(App.PS2);
+                Outputer.println("Введите название организации:");
+                Outputer.print(Main.PS2);
                 name = userScanner.nextLine().trim();
                 if (fileMode) Outputer.println(name);
                 if (name.equals("")) throw new MustBeNotEmptyException();
                 break;
             } catch (NoSuchElementException exception) {
-                Outputer.printerror("Имя не распознано!");
+                Outputer.printerror("Название организации не распознано!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (MustBeNotEmptyException exception) {
-                Outputer.printerror("Имя не может быть пустым!");
+                Outputer.printerror("Название организации не может быть пустым!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (IllegalStateException exception) {
                 Outputer.printerror("Непредвиденная ошибка!");
@@ -63,22 +77,16 @@ public class OrganizationAsker {
         return name;
     }
 
-    /**
-     * Asks a user the marine's X coordinate.
-     *
-     * @return Marine's X coordinate.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public double askX() throws IncorrectInputInScriptException {
+    public long askCoordinatesX() throws IncorrectInputInScriptException {
         String strX;
-        double x;
+        long x;
         while (true) {
             try {
                 Outputer.println("Введите координату X:");
-                Outputer.print(App.PS2);
+                Outputer.print(Main.PS2);
                 strX = userScanner.nextLine().trim();
                 if (fileMode) Outputer.println(strX);
-                x = Double.parseDouble(strX);
+                x = Long.parseLong(strX);
                 break;
             } catch (NoSuchElementException exception) {
                 Outputer.printerror("Координата X не распознана!");
@@ -94,29 +102,19 @@ public class OrganizationAsker {
         return x;
     }
 
-    /**
-     * Asks a user the marine's Y coordinate.
-     *
-     * @return Marine's Y coordinate.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public Float askY() throws IncorrectInputInScriptException {
+    public Integer askCoordinatesY() throws IncorrectInputInScriptException {
         String strY;
-        Float y;
+        Integer y;
         while (true) {
             try {
-                Outputer.println("Введите координату Y < " + (SpaceMarine.MAX_Y + 1) + ":");
-                Outputer.print(App.PS2);
+                Outputer.println("Введите координату Y:");
+                Outputer.print(Main.PS2);
                 strY = userScanner.nextLine().trim();
                 if (fileMode) Outputer.println(strY);
-                y = Float.parseFloat(strY);
-                if (y > SpaceMarine.MAX_Y) throw new NotInDeclaredLimitsException();
+                y = Integer.parseInt(strY);
                 break;
             } catch (NoSuchElementException exception) {
                 Outputer.printerror("Координата Y не распознана!");
-                if (fileMode) throw new IncorrectInputInScriptException();
-            } catch (NotInDeclaredLimitsException exception) {
-                Outputer.printerror("Координата Y не может превышать " + SpaceMarine.MAX_Y + "!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (NumberFormatException exception) {
                 Outputer.printerror("Координата Y должна быть представлена числом!");
@@ -129,236 +127,244 @@ public class OrganizationAsker {
         return y;
     }
 
-    /**
-     * Asks a user the marine's coordinates.
-     *
-     * @return Marine's coordinates.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
     public Coordinates askCoordinates() throws IncorrectInputInScriptException {
-        double x;
-        Float y;
-        x = askX();
-        y = askY();
+        long x;
+        Integer y;
+        x = askCoordinatesX();
+        y = askCoordinatesY();
         return new Coordinates(x, y);
     }
 
-    /**
-     * Asks a user the marine's health.
-     *
-     * @return Marine's health.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public double askHealth() throws IncorrectInputInScriptException {
-        String strHealth;
-        double health;
+    public int askTurnover() throws IncorrectInputInScriptException {
+        String strTurnover;
+        int turnover;
         while (true) {
             try {
-                Outputer.println("Введите здоровье:");
-                Outputer.print(App.PS2);
-                strHealth = userScanner.nextLine().trim();
-                if (fileMode) Outputer.println(strHealth);
-                health = Double.parseDouble(strHealth);
-                if (health <= SpaceMarine.MIN_HEALTH) throw new NotInDeclaredLimitsException();
+                Outputer.println("Введите годовой оборот:");
+                Outputer.print(Main.PS2);
+                strTurnover = userScanner.nextLine().trim();
+                if (fileMode) Outputer.println(strTurnover);
+                turnover = Integer.parseInt(strTurnover);
+                if (turnover < MIN_TURNOVER) throw new NotInDeclaredLimitsException();
                 break;
             } catch (NoSuchElementException exception) {
-                Outputer.printerror("Здоровье не распознано!");
+                Outputer.printerror("Годовой оборот не распознан!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (NotInDeclaredLimitsException exception) {
-                Outputer.printerror("Здоровье должно быть больше нуля!");
+                Outputer.printerror("Годовой оборот должен быть больше нуля!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (NumberFormatException exception) {
-                Outputer.printerror("Здоровье должно быть представлено числом!");
+                Outputer.printerror("Годовой оборот должен быть представлен числом!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (NullPointerException | IllegalStateException exception) {
                 Outputer.printerror("Непредвиденная ошибка!");
                 System.exit(0);
             }
         }
-        return health;
+        return turnover;
     }
 
-    /**
-     * Asks a user the marine's category.
-     *
-     * @return Marine's category.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public AstartesCategory askCategory() throws IncorrectInputInScriptException {
-        String strCategory;
-        AstartesCategory category;
+    public String askFullName() throws IncorrectInputInScriptException {
+        String fullName;
         while (true) {
             try {
-                Outputer.println("Список категорий - " + AstartesCategory.nameList());
-                Outputer.println("Введите категорию:");
-                Outputer.print(App.PS2);
-                strCategory = userScanner.nextLine().trim();
-                if (fileMode) Outputer.println(strCategory);
-                category = AstartesCategory.valueOf(strCategory.toUpperCase());
+                Outputer.println("Введите полное название компании:");
+                Outputer.print(Main.PS2);
+                fullName = userScanner.nextLine().trim();
+                if (fileMode) Outputer.println(fullName);
+                if (fullName.equals("")) throw new MustBeNotEmptyException();
                 break;
             } catch (NoSuchElementException exception) {
-                Outputer.printerror("Категория не распознана!");
-                if (fileMode) throw new IncorrectInputInScriptException();
-            } catch (IllegalArgumentException exception) {
-                Outputer.printerror("Категории нет в списке!");
-                if (fileMode) throw new IncorrectInputInScriptException();
-            } catch (IllegalStateException exception) {
-                Outputer.printerror("Непредвиденная ошибка!");
-                System.exit(0);
-            }
-        }
-        return category;
-    }
-
-    /**
-     * Asks a user the marine's weapon type.
-     *
-     * @return Marine's weapon type.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public Weapon askWeaponType() throws IncorrectInputInScriptException {
-        String strWeaponType;
-        Weapon weaponType;
-        while (true) {
-            try {
-                Outputer.println("Список оружия дальнего боя - " + Weapon.nameList());
-                Outputer.println("Введите оружие дальнего боя:");
-                Outputer.print(App.PS2);
-                strWeaponType = userScanner.nextLine().trim();
-                if (fileMode) Outputer.println(strWeaponType);
-                weaponType = Weapon.valueOf(strWeaponType.toUpperCase());
-                break;
-            } catch (NoSuchElementException exception) {
-                Outputer.printerror("Оружие не распознано!");
-                if (fileMode) throw new IncorrectInputInScriptException();
-            } catch (IllegalArgumentException exception) {
-                Outputer.printerror("Оружия нет в списке!");
-                if (fileMode) throw new IncorrectInputInScriptException();
-            } catch (IllegalStateException exception) {
-                Outputer.printerror("Непредвиденная ошибка!");
-                System.exit(0);
-            }
-        }
-        return weaponType;
-    }
-
-    /**
-     * Asks a user the marine's melee weapon.
-     *
-     * @return Marine's melee weapon.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public MeleeWeapon askMeleeWeapon() throws IncorrectInputInScriptException {
-        String strMeleeWeapon;
-        MeleeWeapon meleeWeapon;
-        while (true) {
-            try {
-                Outputer.println("Список оружия ближнего боя - " + MeleeWeapon.nameList());
-                Outputer.println("Введите оружие ближнего боя:");
-                Outputer.print(App.PS2);
-                strMeleeWeapon = userScanner.nextLine().trim();
-                if (fileMode) Outputer.println(strMeleeWeapon);
-                meleeWeapon = MeleeWeapon.valueOf(strMeleeWeapon.toUpperCase());
-                break;
-            } catch (NoSuchElementException exception) {
-                Outputer.printerror("Оружие не распознано!");
-                if (fileMode) throw new IncorrectInputInScriptException();
-            } catch (IllegalArgumentException exception) {
-                Outputer.printerror("Оружия нет в списке!");
-                if (fileMode) throw new IncorrectInputInScriptException();
-            } catch (IllegalStateException exception) {
-                Outputer.printerror("Непредвиденная ошибка!");
-                System.exit(0);
-            }
-        }
-        return meleeWeapon;
-    }
-
-    /**
-     * Asks a user the marine chapter's name.
-     *
-     * @return Chapter's name.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public String askChapterName() throws IncorrectInputInScriptException {
-        String chapterName;
-        while (true) {
-            try {
-                Outputer.println("Введите имя ордена:");
-                Outputer.print(App.PS2);
-                chapterName = userScanner.nextLine().trim();
-                if (fileMode) Outputer.println(chapterName);
-                if (chapterName.equals("")) throw new MustBeNotEmptyException();
-                break;
-            } catch (NoSuchElementException exception) {
-                Outputer.printerror("Имя ордена не распознано!");
+                Outputer.printerror("Полное название компании не распознано!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (MustBeNotEmptyException exception) {
-                Outputer.printerror("Имя ордена не может быть пустым!");
+                Outputer.printerror("Полное название компании не может быть пустым!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (IllegalStateException exception) {
                 Outputer.printerror("Непредвиденная ошибка!");
                 System.exit(0);
             }
         }
-        return chapterName;
+        return fullName;
     }
 
-    /**
-     * Asks a user the marine chapter's number of soldiers.
-     *
-     * @return Number of soldiers.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public long askChapterMarinesCount() throws IncorrectInputInScriptException {
-        String strMarinesCount;
-        long marinesCount;
+    public Long askEmployeesCount() throws IncorrectInputInScriptException {
+        String strEmployeesCount;
+        Long employeesCount;
         while (true) {
             try {
-                Outputer.println("Введите количество солдат в ордене < " + (SpaceMarine.MAX_MARINES + 1) + ":");
-                Outputer.print(App.PS2);
-                strMarinesCount = userScanner.nextLine().trim();
-                if (fileMode) Outputer.println(strMarinesCount);
-                marinesCount = Long.parseLong(strMarinesCount);
-                if (marinesCount < SpaceMarine.MIN_MARINES || marinesCount > SpaceMarine.MAX_MARINES)
-                    throw new NotInDeclaredLimitsException();
+                Outputer.println("Введите количество сотрудников Y:");
+                Outputer.print(Main.PS2);
+                strEmployeesCount = userScanner.nextLine().trim();
+                if (fileMode) Outputer.println(strEmployeesCount);
+                employeesCount = Long.parseLong(strEmployeesCount);
+                if (employeesCount < MIN_EMPLOYEES) throw new NotInDeclaredLimitsException();
                 break;
             } catch (NoSuchElementException exception) {
-                Outputer.printerror("Количество солдат в ордене не распознано!");
+                Outputer.printerror("Количество сотрудников не распознано!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (NotInDeclaredLimitsException exception) {
-                Outputer.printerror("Количество солдат в ордене должно быть положительным и не превышать " + SpaceMarine.MAX_MARINES + "!");
+                Outputer.printerror("Количество сотрудников должно быть больше нуля!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (NumberFormatException exception) {
-                Outputer.printerror("Количество солдат в ордене должно быть представлено числом!");
+                Outputer.printerror("Количество сотрудников должно быть представлено числом!");
                 if (fileMode) throw new IncorrectInputInScriptException();
             } catch (NullPointerException | IllegalStateException exception) {
                 Outputer.printerror("Непредвиденная ошибка!");
                 System.exit(0);
             }
         }
-        return marinesCount;
+        return employeesCount;
     }
 
-    /**
-     * Asks a user the marine's chapter.
-     *
-     * @return Marine's chapter.
-     * @throws IncorrectInputInScriptException If script is running and something goes wrong.
-     */
-    public Chapter askChapter() throws IncorrectInputInScriptException {
-        String name;
-        long marinesCount;
-        name = askChapterName();
-        marinesCount = askChapterMarinesCount();
-        return new Chapter(name, marinesCount);
+    public OrganizationType askType() throws IncorrectInputInScriptException {
+        String strType;
+        OrganizationType type;
+        while (true) {
+            try {
+                Outputer.println("Список типов организаций - " + OrganizationType.nameList());
+                Outputer.println("Введите тип:");
+                Outputer.print(Main.PS2);
+                strType = userScanner.nextLine().trim();
+                if (fileMode) Outputer.println(strType);
+                type = OrganizationType.valueOf(strType.toUpperCase());
+                break;
+            } catch (NoSuchElementException exception) {
+                Outputer.printerror("Тип не распознан!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (IllegalArgumentException exception) {
+                Outputer.printerror("Типа нет в списке!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (IllegalStateException exception) {
+                Outputer.printerror("Непредвиденная ошибка!");
+                System.exit(0);
+            }
+        }
+        return type;
+    }
+
+    public String askStreet() throws IncorrectInputInScriptException {
+        String StreetName;
+        while (true) {
+            try {
+                Outputer.println("Введите улицу:");
+                Outputer.print(Main.PS2);
+                StreetName = userScanner.nextLine().trim();
+                if (fileMode) Outputer.println(StreetName);
+                if (StreetName.equals("")) throw new MustBeNotEmptyException();
+                break;
+            } catch (NoSuchElementException exception) {
+                Outputer.printerror("Улица не распознана!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (MustBeNotEmptyException exception) {
+                Outputer.printerror("Улица не может быть пустой!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (IllegalStateException exception) {
+                Outputer.printerror("Непредвиденная ошибка!");
+                System.exit(0);
+            }
+        }
+        return StreetName;
+    }
+
+    public Address askAddress() throws IncorrectInputInScriptException {
+        String street;
+        Location town;
+        street = askStreet();
+        town = askLocation();
+        return new Address(street, town);
+    }
+
+    public int askLocationX() throws IncorrectInputInScriptException {
+        String strX;
+        int x;
+        while (true) {
+            try {
+                Outputer.println("Введите координату X:");
+                Outputer.print(Main.PS2);
+                strX = userScanner.nextLine().trim();
+                if (fileMode) Outputer.println(strX);
+                x = Integer.parseInt(strX);
+                break;
+            } catch (NoSuchElementException exception) {
+                Outputer.printerror("Координата X не распознана!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (NumberFormatException exception) {
+                Outputer.printerror("Координата X должна быть представлена числом!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (NullPointerException | IllegalStateException exception) {
+                Outputer.printerror("Непредвиденная ошибка!");
+                System.exit(0);
+            }
+        }
+        return x;
+    }
+
+    public Float askLocationY() throws IncorrectInputInScriptException {
+        String strY;
+        Float y;
+        while (true) {
+            try {
+                Outputer.println("Введите координату Y:");
+                Outputer.print(Main.PS2);
+                strY = userScanner.nextLine().trim();
+                if (fileMode) Outputer.println(strY);
+                y = Float.parseFloat(strY);
+                break;
+            } catch (NoSuchElementException exception) {
+                Outputer.printerror("Координата Y не распознана!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (NumberFormatException exception) {
+                Outputer.printerror("Координата Y должна быть представлена числом!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (NullPointerException | IllegalStateException exception) {
+                Outputer.printerror("Непредвиденная ошибка!");
+                System.exit(0);
+            }
+        }
+        return y;
+    }
+
+
+    public long askLocationZ() throws IncorrectInputInScriptException {
+        String strZ;
+        long z;
+        while (true) {
+            try {
+                Outputer.println("Введите координату Z:");
+                Outputer.print(Main.PS2);
+                strZ = userScanner.nextLine().trim();
+                if (fileMode) Outputer.println(strZ);
+                z = Long.parseLong(strZ);
+                break;
+            } catch (NoSuchElementException exception) {
+                Outputer.printerror("Координата Z не распознана!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (NumberFormatException exception) {
+                Outputer.printerror("Координата Z должна быть представлена числом!");
+                if (fileMode) throw new IncorrectInputInScriptException();
+            } catch (NullPointerException | IllegalStateException exception) {
+                Outputer.printerror("Непредвиденная ошибка!");
+                System.exit(0);
+            }
+        }
+        return z;
+    }
+
+    public Location askLocation() throws IncorrectInputInScriptException {
+        int x;
+        Float y; //Поле не может быть null
+        long z;
+        x = askLocationX();
+        y = askLocationY();
+        z = askLocationZ();
+        return new Location(x, y, z);
     }
 
     /**
      * Asks a user a question.
-     *
-     * @param question A question.
      * @return Answer (true/false).
+     * @param question A question.
      * @throws IncorrectInputInScriptException If script is running and something goes wrong.
      */
     public boolean askQuestion(String question) throws IncorrectInputInScriptException {
@@ -367,7 +373,7 @@ public class OrganizationAsker {
         while (true) {
             try {
                 Outputer.println(finalQuestion);
-                Outputer.print(App.PS2);
+                Outputer.print(Main.PS2);
                 answer = userScanner.nextLine().trim();
                 if (fileMode) Outputer.println(answer);
                 if (!answer.equals("+") && !answer.equals("-")) throw new NotInDeclaredLimitsException();
@@ -383,6 +389,11 @@ public class OrganizationAsker {
                 System.exit(0);
             }
         }
-        return answer.equals("+");
+        return (answer.equals("+")) ? true : false;
+    }
+
+    @Override
+    public String toString() {
+        return "OrganizationAsker (вспомогательный класс для запросов пользователю)";
     }
 }
