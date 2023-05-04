@@ -8,7 +8,7 @@ package ru.sayron.client.utility;
 // import common.interaction.OrganizationRaw;
 // import common.interaction.Request;
 // import common.interaction.ResponseCode;
-// import common.utility.Outputer;
+import ru.sayron.common.utility.Outputer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
