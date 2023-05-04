@@ -1,5 +1,6 @@
 package ru.sayron.server.utility;
 
+import ru.sayron.common.utility.Outputer;
 import ru.sayron.server.commands.Command;
 import ru.sayron.common.exceptions.*;
 
@@ -109,7 +110,7 @@ public class CommandManager {
      * @return Command exit status.
      */
     public boolean noSuchCommand(String command) {
-        Console.println("Команда '" + command + "' не найдена. Наберите 'help' для справки.");
+        Outputer.println("Команда '" + command + "' не найдена. Наберите 'help' для справки.");
         return false;
     }
 
@@ -121,7 +122,7 @@ public class CommandManager {
     public boolean help(String argument) {
         if (helpCommand.execute(argument)) {
             for (Command command : commands) {
-                Console.printtable(command.getName(), command.getDescription());
+                Outputer.printtable(command.getName(), command.getDescription());
             }
             return true;
         } else return false;
@@ -251,13 +252,13 @@ public class CommandManager {
             try {
                 if (commandHistory.length == 0) throw new HistoryIsEmptyException();
 
-                Console.println("Последние использованные команды:");
+                Outputer.println("Последние использованные команды:");
                 for (int i=0; i<commandHistory.length; i++) {
-                    if (commandHistory[i] != null) Console.println(" " + commandHistory[i]);
+                    if (commandHistory[i] != null) Outputer.println(" " + commandHistory[i]);
                 }
                 return true;
             } catch (HistoryIsEmptyException exception) {
-                Console.println("Ни одной команды еще не было использовано!");
+                Outputer.println("Ни одной команды еще не было использовано!");
             }
         }
         return false;

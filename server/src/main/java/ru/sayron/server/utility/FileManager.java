@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import ru.sayron.common.data.Organization;
+import ru.sayron.common.utility.Outputer;
 
 import java.io.*;
 import java.text.DateFormat;
@@ -37,9 +38,9 @@ public class FileManager {
             xmlMapper.setDateFormat(dateFormat);
             xmlMapper.writeValue(outputStream, collection);
         } catch (FileNotFoundException exception) {
-            Console.printerror("Файл для записи не найден!");
+            Outputer.printerror("Файл для записи не найден!");
         } catch (IOException exception) {
-            Console.printerror("Ошибка записи в файл!");
+            Outputer.printerror("Ошибка записи в файл!");
         }
     }
 
@@ -56,11 +57,11 @@ public class FileManager {
                 String xml = collectionFileReader.lines().collect(Collectors.joining());
                 return xmlMapper.readValue(xml, new TypeReference<TreeSet<Organization>>() {});
             } catch (FileNotFoundException exception) {
-                Console.printerror("Загрузочный файл не найден!");
+                Outputer.printerror("Загрузочный файл не найден!");
             } catch (IOException exception) {
-                Console.printerror("Ошибка чтения загрузочного файла!");
+                Outputer.printerror("Ошибка чтения загрузочного файла!");
             }
-        } else Console.printerror("Системная переменная с загрузочным файлом не найдена!");
+        } else Outputer.printerror("Системная переменная с загрузочным файлом не найдена!");
         return new TreeSet<Organization>();
     }
 
