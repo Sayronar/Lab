@@ -1,17 +1,18 @@
 package ru.sayron.client.utility;
 
-// import ru.sayron.client.Main;
-// import common.data.*;
-// import common.exceptions.CommandUsageException;
-// import common.exceptions.IncorrectInputInScriptException;
-// import common.exceptions.ScriptRecursionException;
-// import common.interaction.OrganizationRaw;
-// import common.interaction.Request;
-// import common.interaction.ResponseCode;
+import ru.sayron.client.Main;
+import ru.sayron.common.data.*;
+import ru.sayron.common.exceptions.CommandUsageException;
+import ru.sayron.common.exceptions.IncorrectInputInScriptException;
+import ru.sayron.common.exceptions.ScriptRecursionException;
+import ru.sayron.common.interaction.OrganizationRaw;
+import ru.sayron.common.interaction.Request;
+import ru.sayron.common.interaction.ResponseCode;
 import ru.sayron.common.utility.Outputer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Stack;
@@ -74,10 +75,10 @@ public class UserHandler {
                 switch (processingCode) {
                     case OBJECT:
                         OrganizationRaw organizationAddRaw = generateOrganizationAdd();
-                        return new Request(userCommand[0], userCommand[1], organizationAddRaw);
+                        return new Request(userCommand[0], userCommand[1], (Serializable) organizationAddRaw);
                     case UPDATE_OBJECT:
                         OrganizationRaw organizationUpdateRaw = generateOrganizationUpdate();
-                        return new Request(userCommand[0], userCommand[1], organizationUpdateRaw);
+                        return new Request(userCommand[0], userCommand[1], (Serializable) organizationUpdateRaw);
                     case SCRIPT:
                         File scriptFile = new File(userCommand[1]);
                         if (!scriptFile.exists()) throw new FileNotFoundException();
@@ -187,11 +188,11 @@ public class UserHandler {
         return new OrganizationRaw(
                 organizationAsker.askName(),
                 organizationAsker.askCoordinates(),
-                organizationAsker.askHealth(),
-                organizationAsker.askCategory(),
-                organizationAsker.askWeaponType(),
-                organizationAsker.askMeleeWeapon(),
-                organizationAsker.askChapter()
+                organizationAsker.askTurnover(),
+                organizationAsker.askFullName(),
+                organizationAsker.askEmployeesCount(),
+                organizationAsker.askType(),
+                organizationAsker.askAddress()
         );
     }
 
@@ -199,28 +200,28 @@ public class UserHandler {
     private OrganizationRaw generateOrganizationUpdate() throws IncorrectInputInScriptException {
         OrganizationAsker organizationAsker = new OrganizationAsker(userScanner);
         if (fileMode()) organizationAsker.setFileMode();
-        String name = organizationAsker.askQuestion("Хотите изменить имя солдата?") ?
+        String name = organizationAsker.askQuestion("Хотите изменить название организации?") ?
                 organizationAsker.askName() : null;
-        Coordinates coordinates = organizationAsker.askQuestion("Хотите изменить координаты солдата?") ?
+        Coordinates coordinates = organizationAsker.askQuestion("Хотите изменить координаты организации?") ?
                 organizationAsker.askCoordinates() : null;
-        double health = organizationAsker.askQuestion("Хотите изменить здоровье солдата?") ?
-                organizationAsker.askHealth() : -1;
-        AstartesCategory category = organizationAsker.askQuestion("Хотите изменить категорию солдата?") ?
-                organizationAsker.askCategory() : null;
-        Weapon weaponType = organizationAsker.askQuestion("Хотите изменить оружие дальнего боя солдата?") ?
-                organizationAsker.askWeaponType() : null;
-        MeleeWeapon meleeWeapon = organizationAsker.askQuestion("Хотите изменить оружие ближнего боя солдата?") ?
-                OrganizationAsker.askMeleeWeapon() : null;
-        Chapter chapter = organizationAsker.askQuestion("Хотите изменить орден солдата?") ?
-                organizationAsker.askChapter() : null;
+        int annualTurnover = organizationAsker.askQuestion("Хотите изменить годовой оборот организации?") ?
+                organizationAsker.askTurnover() : null;
+        String fullName = organizationAsker.askQuestion("Хотите изменить полное название организации?") ?
+                organizationAsker.askFullName() : null;
+        Long employeesCount = organizationAsker.askQuestion("Хотите изменить количество работников организации?") ?
+                organizationAsker.askEmployeesCount() : null;
+        OrganizationType type = organizationAsker.askQuestion("Хотите изменить тип организации?") ?
+                organizationAsker.askType() : null;
+        Address officialAddress = organizationAsker.askQuestion("Хотите изменить адрес организации?") ?
+                organizationAsker.askAddress() : null;
         return new OrganizationRaw(
                 name,
                 coordinates,
-                health,
-                category,
-                weaponType,
-                meleeWeapon,
-                chapter
+                annualTurnover,
+                fullName,
+                employeesCount,
+                type,
+                officialAddress
         );
     }
 
