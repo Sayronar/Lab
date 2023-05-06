@@ -76,14 +76,14 @@ public class OrganizationRaw {
     @Override
     public String toString() {
         String info = "";
-        info += "'Сырая' организация";
-        info += "\n Название: " + name;
-        info += "\n Местоположение: " + coordinates;
-        info += "\n Годовой оборот: " + annualTurnover;
-        info += "\n Полное название: " + fullName;
-        info += "\n Количество сотрудников: " + employeesCount;
-        info += "\n Тип организации: " + type;
-        info += "\n Адрес: " + officialAddress;
+        info += "'Raw' organization";
+        info += "\n Name: " + name;
+        info += "\n Location: " + coordinates;
+        info += "\n Annual turnover: " + annualTurnover;
+        info += "\n Full name: " + fullName;
+        info += "\n The number of employees: " + employeesCount;
+        info += "\n Organization type: " + type;
+        info += "\n Address: " + officialAddress;
         return info;
     }
 

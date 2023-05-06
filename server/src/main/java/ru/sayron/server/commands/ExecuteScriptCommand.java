@@ -9,7 +9,7 @@ import ru.sayron.common.utility.Outputer;
  */
 public class ExecuteScriptCommand extends AbstractCommand {
     public ExecuteScriptCommand() {
-        super("execute_script <file_name>", "исполнить скрипт из указанного файла");
+        super("execute_script <file_name>", "execute script from specified file");
     }
 
     /**
@@ -20,10 +20,10 @@ public class ExecuteScriptCommand extends AbstractCommand {
     public boolean execute(String argument) {
         try {
             if (argument.isEmpty()) throw new WrongAmountOfElementsException();
-            Outputer.println("Выполняю скрипт '" + argument + "'...");
+            Outputer.println("Executing a script '" + argument + "'...");
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         }
         return false;
     }

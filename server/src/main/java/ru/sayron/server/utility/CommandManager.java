@@ -110,7 +110,7 @@ public class CommandManager {
      * @return Command exit status.
      */
     public boolean noSuchCommand(String command) {
-        Outputer.println("Команда '" + command + "' не найдена. Наберите 'help' для справки.");
+        Outputer.println("Command '" + command + "' not found. Type 'help' for help.");
         return false;
     }
 
@@ -252,13 +252,13 @@ public class CommandManager {
             try {
                 if (commandHistory.length == 0) throw new HistoryIsEmptyException();
 
-                Outputer.println("Последние использованные команды:");
+                Outputer.println("Last used commands:");
                 for (int i=0; i<commandHistory.length; i++) {
                     if (commandHistory[i] != null) Outputer.println(" " + commandHistory[i]);
                 }
                 return true;
             } catch (HistoryIsEmptyException exception) {
-                Outputer.println("Ни одной команды еще не было использовано!");
+                Outputer.println("No commands have been used yet!");
             }
         }
         return false;
@@ -297,7 +297,7 @@ public class CommandManager {
 
     @Override
     public String toString() {
-        return "CommandManager (вспомогательный класс для работы с командами)";
+        return "CommandManager (helper class for working with commands)";
     }
 }
 

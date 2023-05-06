@@ -10,7 +10,7 @@ import ru.sayron.common.utility.Outputer;
 public class ExitCommand extends AbstractCommand {
 
     public ExitCommand() {
-        super("exit", "завершить программу (без сохранения в файл)");
+        super("exit", "terminate program (without saving to file)");
     }
 
     /**
@@ -23,7 +23,7 @@ public class ExitCommand extends AbstractCommand {
             if (!argument.isEmpty()) throw new WrongAmountOfElementsException();
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         }
         return false;
     }

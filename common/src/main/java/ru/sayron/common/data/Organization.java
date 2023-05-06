@@ -73,15 +73,15 @@ public class Organization implements Comparable<Organization> {
     @Override
     public String toString() {
         String info = "";
-        info += "Организация №" + id;
-        info += " (добавлена " + creationDate.toLocalDate() + " " + creationDate.toLocalTime() + ")";
-        info += "\n Название: " + name;
-        info += "\n Местоположение: " + coordinates;
-        info += "\n Годовой оборот: " + annualTurnover;
-        info += "\n Полное название: " + fullName;
-        info += "\n Количество работников: " + employeesCount;
-        info += "\n Тип организации: " + type;
-        info += "\n Адрес: " + officialAddress;
+        info += "Organization №" + id;
+        info += " (added " + creationDate.toLocalDate() + " " + creationDate.toLocalTime() + ")";
+        info += "\n Name: " + name;
+        info += "\n Location: " + coordinates;
+        info += "\n Annual turnover: " + annualTurnover;
+        info += "\n Full name: " + fullName;
+        info += "\n Amount of employees: " + employeesCount;
+        info += "\n Organization type: " + type;
+        info += "\n Address: " + officialAddress;
         return info;
     }
 

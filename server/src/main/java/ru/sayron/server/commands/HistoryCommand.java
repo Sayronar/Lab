@@ -10,7 +10,7 @@ import ru.sayron.common.utility.Outputer;
 public class HistoryCommand extends AbstractCommand {
 
     public HistoryCommand() {
-        super("history", "вывести историю использованных команд");
+        super("history", "display history of used commands");
     }
 
     /**
@@ -23,7 +23,7 @@ public class HistoryCommand extends AbstractCommand {
             if (!argument.isEmpty()) throw new WrongAmountOfElementsException();
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         }
         return false;
     }

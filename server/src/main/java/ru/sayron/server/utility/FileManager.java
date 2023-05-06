@@ -38,9 +38,9 @@ public class FileManager {
             xmlMapper.setDateFormat(dateFormat);
             xmlMapper.writeValue(outputStream, collection);
         } catch (FileNotFoundException exception) {
-            Outputer.printerror("Файл для записи не найден!");
+            Outputer.printerror("Writable file not found!");
         } catch (IOException exception) {
-            Outputer.printerror("Ошибка записи в файл!");
+            Outputer.printerror("Error writing to file!");
         }
     }
 
@@ -57,18 +57,18 @@ public class FileManager {
                 String xml = collectionFileReader.lines().collect(Collectors.joining());
                 return xmlMapper.readValue(xml, new TypeReference<TreeSet<Organization>>() {});
             } catch (FileNotFoundException exception) {
-                Outputer.printerror("Загрузочный файл не найден!");
+                Outputer.printerror("Boot file not found!");
             } catch (IOException exception) {
-                Outputer.printerror("Ошибка чтения загрузочного файла!");
+                Outputer.printerror("Error reading boot file!");
             }
-        } else Outputer.printerror("Системная переменная с загрузочным файлом не найдена!");
+        } else Outputer.printerror("Boot file system variable not found!");
         return new TreeSet<Organization>();
     }
 
 
     @Override
     public String toString() {
-        String string = "FileManager (класс для работы с загрузочным файлом)";
+        String string = "FileManager (class for working with the boot file)";
         return string;
     }
 }

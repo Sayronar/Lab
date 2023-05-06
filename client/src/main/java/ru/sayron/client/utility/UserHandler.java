@@ -43,7 +43,7 @@ public class UserHandler {
                     while (fileMode() && !userScanner.hasNextLine()) {
                         userScanner.close();
                         userScanner = scannerStack.pop();
-                        Outputer.println("Возвращаюсь к скрипту '" + scriptStack.pop().getName() + "'...");
+                        Outputer.println("Back to the script '" + scriptStack.pop().getName() + "'...");
                     }
                     if (fileMode()) {
                         userInput = userScanner.nextLine();
@@ -59,11 +59,11 @@ public class UserHandler {
                     userCommand[1] = userCommand[1].trim();
                 } catch (NoSuchElementException | IllegalStateException exception) {
                     Outputer.println();
-                    Outputer.printerror("Произошла ошибка при вводе команды!");
+                    Outputer.printerror("An error occurred while entering the command!");
                     userCommand = new String[]{"", ""};
                     rewriteAttempts++;
                     if (rewriteAttempts >= maxRewriteAttempts) {
-                        Outputer.printerror("Превышено количество попыток ввода!");
+                        Outputer.printerror("Number of input attempts exceeded!");
                         System.exit(0);
                     }
                 }
@@ -87,17 +87,17 @@ public class UserHandler {
                         scannerStack.push(userScanner);
                         scriptStack.push(scriptFile);
                         userScanner = new Scanner(scriptFile);
-                        Outputer.println("Выполняю скрипт '" + scriptFile.getName() + "'...");
+                        Outputer.println("Executing a script '" + scriptFile.getName() + "'...");
                         break;
                 }
             } catch (FileNotFoundException exception) {
-                Outputer.printerror("Файл со скриптом не найден!");
+                Outputer.printerror("Script file not found!");
             } catch (ScriptRecursionException exception) {
-                Outputer.printerror("Скрипты не могут вызываться рекурсивно!");
+                Outputer.printerror("Scripts cannot be called recursively!");
                 throw new IncorrectInputInScriptException();
             }
         } catch (IncorrectInputInScriptException exception) {
-            Outputer.printerror("Выполнение скрипта прервано!");
+            Outputer.printerror("Script execution aborted!");
             while (!scannerStack.isEmpty()) {
                 userScanner.close();
                 userScanner = scannerStack.pop();
@@ -170,12 +170,12 @@ public class UserHandler {
                     if (!commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
                 default:
-                    Outputer.println("Команда '" + command + "' не найдена. Наберите 'help' для справки.");
+                    Outputer.println("Command '" + command + "' is not found. Type 'help' for help.");
                     return ProcessingCode.ERROR;
             }
         } catch (CommandUsageException exception) {
             if (exception.getMessage() != null) command += " " + exception.getMessage();
-            Outputer.println("Использование: '" + command + "'");
+            Outputer.println("Usage: '" + command + "'");
             return ProcessingCode.ERROR;
         }
         return ProcessingCode.OK;
@@ -200,19 +200,19 @@ public class UserHandler {
     private OrganizationRaw generateOrganizationUpdate() throws IncorrectInputInScriptException {
         OrganizationAsker organizationAsker = new OrganizationAsker(userScanner);
         if (fileMode()) organizationAsker.setFileMode();
-        String name = organizationAsker.askQuestion("Хотите изменить название организации?") ?
+        String name = organizationAsker.askQuestion("Do you want to change the name of the organization?") ?
                 organizationAsker.askName() : null;
-        Coordinates coordinates = organizationAsker.askQuestion("Хотите изменить координаты организации?") ?
+        Coordinates coordinates = organizationAsker.askQuestion("Do you want to change the coordinates of the organization?") ?
                 organizationAsker.askCoordinates() : null;
-        int annualTurnover = organizationAsker.askQuestion("Хотите изменить годовой оборот организации?") ?
+        int annualTurnover = organizationAsker.askQuestion("Do you want to change the annual turnover of the organization?") ?
                 organizationAsker.askTurnover() : null;
-        String fullName = organizationAsker.askQuestion("Хотите изменить полное название организации?") ?
+        String fullName = organizationAsker.askQuestion("Do you want to change the full name of the organization?") ?
                 organizationAsker.askFullName() : null;
-        Long employeesCount = organizationAsker.askQuestion("Хотите изменить количество работников организации?") ?
+        Long employeesCount = organizationAsker.askQuestion("Do you want to change the number of employees in your organization?") ?
                 organizationAsker.askEmployeesCount() : null;
-        OrganizationType type = organizationAsker.askQuestion("Хотите изменить тип организации?") ?
+        OrganizationType type = organizationAsker.askQuestion("Do you want to change the organization type?") ?
                 organizationAsker.askType() : null;
-        Address officialAddress = organizationAsker.askQuestion("Хотите изменить адрес организации?") ?
+        Address officialAddress = organizationAsker.askQuestion("Do you want to change the address of the organization?") ?
                 organizationAsker.askAddress() : null;
         return new OrganizationRaw(
                 name,

@@ -1,6 +1,6 @@
 package ru.sayron.server.commands;
 
-import ru.sayron.client.client.OrganizationAsker;
+import ru.sayron.client.utility.OrganizationAsker;
 import ru.sayron.common.data.*;
 import ru.sayron.common.exceptions.*;
 import ru.sayron.common.utility.Outputer;
@@ -16,7 +16,7 @@ public class UpdateIdCommand extends AbstractCommand {
     private OrganizationAsker organizationAsker;
 
     public UpdateIdCommand(CollectionManager collectionManager, OrganizationAsker organizationAsker) {
-        super("update <ID> {element}", "обновить значение элемента коллекции по ID");
+        super("update <ID> {element}", "update collection element value by ID");
         this.collectionManager = collectionManager;
         this.organizationAsker = organizationAsker;
     }
@@ -46,13 +46,13 @@ public class UpdateIdCommand extends AbstractCommand {
 
             collectionManager.removeFromCollection(organization);
 
-            if (organizationAsker.askQuestion("Хотите изменить название организации?")) name = organizationAsker.askName();
-            if (organizationAsker.askQuestion("Хотите изменить координаты организации?")) coordinates = organizationAsker.askCoordinates();
-            if (organizationAsker.askQuestion("Хотите изменить годовой оборот организации?")) turnover = organizationAsker.askTurnover();
-            if (organizationAsker.askQuestion("Хотите изменить полное название организации?")) fullName = organizationAsker.askFullName();
-            if (organizationAsker.askQuestion("Хотите изменить количество работников организации?")) employeesCount = organizationAsker.askEmployeesCount();
-            if (organizationAsker.askQuestion("Хотите изменить тип организации?")) type = organizationAsker.askType();
-            if (organizationAsker.askQuestion("Хотите изменить адрес организации?")) officialAddress = organizationAsker.askAddress();
+            if (organizationAsker.askQuestion("Do you want to change the name of the organization?")) name = organizationAsker.askName();
+            if (organizationAsker.askQuestion("Do you want to change the coordinates of the organization?")) coordinates = organizationAsker.askCoordinates();
+            if (organizationAsker.askQuestion("Do you want to change the annual turnover of the organization?")) turnover = organizationAsker.askTurnover();
+            if (organizationAsker.askQuestion("Do you want to change the full name of the organization?")) fullName = organizationAsker.askFullName();
+            if (organizationAsker.askQuestion("Do you want to change the number of employees in your organization?")) employeesCount = organizationAsker.askEmployeesCount();
+            if (organizationAsker.askQuestion("Do you want to change the organization type?")) type = organizationAsker.askType();
+            if (organizationAsker.askQuestion("Do you want to change the address of the organization?")) officialAddress = organizationAsker.askAddress();
 
             collectionManager.addToCollection(new Organization(
                     id,
@@ -65,16 +65,16 @@ public class UpdateIdCommand extends AbstractCommand {
                     type,
                     officialAddress
             ));
-            Outputer.println("Организация успешно изменена!");
+            Outputer.println("The organization has been successfully changed!");
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         } catch (CollectionIsEmptyException exception) {
-            Outputer.printerror("Коллекция пуста!");
+            Outputer.printerror("The collection is empty!");
         } catch (NumberFormatException exception) {
-            Outputer.printerror("ID должен быть представлен числом!");
+            Outputer.printerror("ID must be represented by a number!");
         } catch (OrganizationNotFoundException exception) {
-            Outputer.printerror("Солдата с таким ID в коллекции нет!");
+            Outputer.printerror("There is no soldier with this ID in the collection!");
         } catch (IncorrectInputInScriptException exception) {}
         return false;
     }

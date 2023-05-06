@@ -13,7 +13,7 @@ public class InfoCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public InfoCommand(CollectionManager collectionManager) {
-        super("info", "вывести информацию о коллекции");
+        super("info", "display information about the collection");
         this.collectionManager = collectionManager;
     }
 
@@ -26,21 +26,21 @@ public class InfoCommand extends AbstractCommand {
         try {
             if (!argument.isEmpty()) throw new WrongAmountOfElementsException();
             LocalDateTime lastInitTime = collectionManager.getLastInitTime();
-            String lastInitTimeString = (lastInitTime == null) ? "в данной сессии инициализации еще не происходило" :
+            String lastInitTimeString = (lastInitTime == null) ? "initialization has not yet taken place in this session" :
                     lastInitTime.toLocalDate().toString() + " " + lastInitTime.toLocalTime().toString();
 
             LocalDateTime lastSaveTime = collectionManager.getLastSaveTime();
-            String lastSaveTimeString = (lastSaveTime == null) ? "в данной сессии сохранения еще не происходило" :
+            String lastSaveTimeString = (lastSaveTime == null) ? "this session has not yet been saved" :
                     lastSaveTime.toLocalDate().toString() + " " + lastSaveTime.toLocalTime().toString();
 
-            Outputer.println("Сведения о коллекции:");
-            Outputer.println(" Тип: " + collectionManager.collectionType());
-            Outputer.println(" Количество элементов: " + collectionManager.collectionSize());
-            Outputer.println(" Дата последнего сохранения: " + lastSaveTimeString);
-            Outputer.println(" Дата последней инициализации: " + lastInitTimeString);
+            Outputer.println("Collection details:");
+            Outputer.println(" Type: " + collectionManager.collectionType());
+            Outputer.println(" Amount of elements: " + collectionManager.collectionSize());
+            Outputer.println(" Date last saved: " + lastSaveTimeString);
+            Outputer.println(" Date of last initialization: " + lastInitTimeString);
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         }
         return false;
     }

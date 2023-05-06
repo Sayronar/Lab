@@ -1,6 +1,6 @@
 package ru.sayron.server.commands;
 
-import ru.sayron.client.client.OrganizationAsker;
+import ru.sayron.client.utility.OrganizationAsker;
 import ru.sayron.common.data.Organization;
 import ru.sayron.common.exceptions.IncorrectInputInScriptException;
 import ru.sayron.common.exceptions.WrongAmountOfElementsException;
@@ -17,7 +17,7 @@ public class AddCommand extends AbstractCommand {
     private OrganizationAsker organizationAsker;
 
     public AddCommand(CollectionManager collectionManager, OrganizationAsker organizationAsker) {
-        super("add {element}", "добавить новый элемент в коллекцию");
+        super("add {element}", "add a new element to the collection");
         this.collectionManager = collectionManager;
         this.organizationAsker = organizationAsker;
     }
@@ -41,10 +41,10 @@ public class AddCommand extends AbstractCommand {
                     organizationAsker.askType(),
                     organizationAsker.askAddress()
             ));
-            Outputer.println("Организация успешно добавлена!");
+            Outputer.println("Organization added successfully!");
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         } catch (IncorrectInputInScriptException exception) {}
         return false;
     }

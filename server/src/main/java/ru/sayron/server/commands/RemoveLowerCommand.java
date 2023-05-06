@@ -2,7 +2,7 @@ package ru.sayron.server.commands;
 
 
 
-import ru.sayron.client.client.OrganizationAsker;
+import ru.sayron.client.utility.OrganizationAsker;
 import ru.sayron.common.data.Organization;
 import ru.sayron.common.exceptions.*;
 import ru.sayron.common.utility.Outputer;
@@ -18,7 +18,7 @@ public class RemoveLowerCommand extends AbstractCommand {
     private OrganizationAsker organizationAsker;
 
     public RemoveLowerCommand(CollectionManager collectionManager, OrganizationAsker organizationAsker) {
-        super("remove_lower {element}", "удалить из коллекции все элементы, меньшие, чем заданный");
+        super("remove_lower {element}", "remove from the collection all elements smaller than the given one");
         this.collectionManager = collectionManager;
         this.organizationAsker = organizationAsker;
     }
@@ -46,14 +46,14 @@ public class RemoveLowerCommand extends AbstractCommand {
             Organization organizationFromCollection = collectionManager.getByValue(organizationToFind);
             if (organizationFromCollection == null) throw new OrganizationNotFoundException();
             collectionManager.removeLower(organizationFromCollection);
-            Outputer.println("Организации успешно удалены!");
+            Outputer.println("Organizations deleted successfully!");
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         } catch (CollectionIsEmptyException exception) {
-            Outputer.printerror("Коллекция пуста!");
+            Outputer.printerror("The collection is empty!");
         } catch (OrganizationNotFoundException exception) {
-            Outputer.printerror("Организации с такими характеристиками в коллекции нет!");
+            Outputer.printerror("There are no organizations with such characteristics in the collection!");
         } catch (IncorrectInputInScriptException exception) {}
         return false;
     }

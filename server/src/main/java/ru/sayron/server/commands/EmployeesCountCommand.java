@@ -9,7 +9,7 @@ public class EmployeesCountCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public EmployeesCountCommand(CollectionManager collectionManager) {
-        super("count_by_employees_count", "вывести количество элементов, значение поля employeesCount которых равно заданному");
+        super("count_by_employees_count", "display the number of elements whose employeesCount field value is equal to the given value");
         this.collectionManager = collectionManager;
     }
 
@@ -27,13 +27,13 @@ public class EmployeesCountCommand extends AbstractCommand {
             if (!filteredInfo.isEmpty()) {
                 Outputer.println(filteredInfo);
                 return true;
-            } else Outputer.println("В коллекции нет организаций с равным заданному количеству сотрудников!");
+            } else Outputer.println("There are no organizations in the collection with an equal number of employees!");
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         } catch (CollectionIsEmptyException exception) {
-            Outputer.printerror("Коллекция пуста!");
+            Outputer.printerror("The collection is empty!");
         } catch (IllegalArgumentException exception) {
-            Outputer.printerror("Организации нет в списке!");
+            Outputer.printerror("Organization not listed!");
         }
         return false;
     }

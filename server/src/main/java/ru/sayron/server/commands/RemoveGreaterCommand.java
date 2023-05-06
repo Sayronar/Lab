@@ -4,7 +4,7 @@ import ru.sayron.common.data.Organization;
 import ru.sayron.common.exceptions.*;
 import ru.sayron.common.utility.Outputer;
 import ru.sayron.server.utility.CollectionManager;
-import ru.sayron.client.client.OrganizationAsker;
+import ru.sayron.client.utility.OrganizationAsker;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +16,7 @@ public class RemoveGreaterCommand extends AbstractCommand {
     private OrganizationAsker organizationAsker;
 
     public RemoveGreaterCommand(CollectionManager collectionManager, OrganizationAsker organizationAsker) {
-        super("remove_greater {element}", "удалить из коллекции все элементы, превышающие заданный");
+        super("remove_greater {element}", "remove from the collection all elements greater than the given");
         this.collectionManager = collectionManager;
         this.organizationAsker = organizationAsker;
     }
@@ -44,14 +44,14 @@ public class RemoveGreaterCommand extends AbstractCommand {
             Organization organizationFromCollection = collectionManager.getByValue(organizationToFind);
             if (organizationFromCollection == null) throw new OrganizationNotFoundException();
             collectionManager.removeGreater(organizationFromCollection);
-            Outputer.println("Организации успешно удалены!");
+            Outputer.println("Organizations deleted successfully!");
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         } catch (CollectionIsEmptyException exception) {
-            Outputer.printerror("Коллекция пуста!");
+            Outputer.printerror("The collection is empty!");
         } catch (OrganizationNotFoundException exception) {
-            Outputer.printerror("Организации с такими характеристиками в коллекции нет!");
+            Outputer.printerror("There are no organizations with such characteristics in the collection!");
         } catch (IncorrectInputInScriptException exception) {}
         return false;
     }

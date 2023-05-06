@@ -10,7 +10,7 @@ public class ShowCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public ShowCommand(CollectionManager collectionManager) {
-        super("show", "вывести все элементы коллекции");
+        super("show", "display all elements of the collection");
         this.collectionManager = collectionManager;
     }
 
@@ -25,7 +25,7 @@ public class ShowCommand extends AbstractCommand {
             Outputer.println(collectionManager);
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         }
         return false;
     }

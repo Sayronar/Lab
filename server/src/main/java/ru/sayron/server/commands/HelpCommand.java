@@ -7,7 +7,7 @@ import ru.sayron.common.utility.Outputer;
 public class HelpCommand extends AbstractCommand {
 
     public HelpCommand() {
-        super("help", "вывести справку по доступным командам");
+        super("help", "display help on available commands");
     }
 
     /**
@@ -21,7 +21,7 @@ public class HelpCommand extends AbstractCommand {
             if (!argument.isEmpty()) throw new WrongAmountOfElementsException();
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         }
         return false;
     }

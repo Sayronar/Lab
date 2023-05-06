@@ -13,7 +13,7 @@ public class RemoveByIdCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public RemoveByIdCommand(CollectionManager collectionManager) {
-        super("remove_by_id <ID>", "удалить элемент из коллекции по ID");
+        super("remove_by_id <ID>", "remove item from collection by ID");
         this.collectionManager = collectionManager;
     }
 
@@ -30,16 +30,16 @@ public class RemoveByIdCommand extends AbstractCommand {
             Organization organizationToRemove = collectionManager.getById(id);
             if (organizationToRemove == null) throw new OrganizationNotFoundException();
             collectionManager.removeFromCollection(organizationToRemove);
-            Outputer.println("Организация успешно удалена!");
+            Outputer.println("Organization successfully deleted!");
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         } catch (CollectionIsEmptyException exception) {
-            Outputer.printerror("Коллекция пуста!");
+            Outputer.printerror("The collection is empty!");
         } catch (NumberFormatException exception) {
-            Outputer.printerror("ID должен быть представлен числом!");
+            Outputer.printerror("ID must be represented by a number!");
         } catch (OrganizationNotFoundException exception) {
-            Outputer.printerror("Организации с таким ID в коллекции нет!");
+            Outputer.printerror("There is no organization with this ID in the collection!");
         }
         return false;
     }

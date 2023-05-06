@@ -50,6 +50,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return street + " по координатам " + town;
+        return street + " by coordinates " + town;
     }
 }

@@ -168,7 +168,7 @@ public class CollectionManager {
     public void saveCollection() {
         fileManager.writeCollection(organizationsCollection);
         lastSaveTime = LocalDateTime.now();
-        System.out.println("Коллекция успешно сохранена");
+        System.out.println("Collection successfully saved.");
     }
 
     /**
@@ -181,7 +181,7 @@ public class CollectionManager {
 
     @Override
     public String toString() {
-        if (organizationsCollection.isEmpty()) return "Коллекция пуста!";
+        if (organizationsCollection.isEmpty()) return "The collection is empty!";
 
         String info = "";
         for (Organization organization : organizationsCollection) {

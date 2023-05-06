@@ -9,7 +9,7 @@ public class FilterGreaterThanEmployeesCountCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public FilterGreaterThanEmployeesCountCommand(CollectionManager collectionManager) {
-        super("filter_greater_than_employees_count", "вывести элементы, значение поля employeesCount которых больше заданного");
+        super("filter_greater_than_employees_count", "display elements whose employeesCount field value is greater than the given one");
         this.collectionManager = collectionManager;
     }
 
@@ -27,13 +27,13 @@ public class FilterGreaterThanEmployeesCountCommand extends AbstractCommand {
             if (!filteredInfo.isEmpty()) {
                 Outputer.println(filteredInfo);
                 return true;
-            } else Outputer.println("В коллекции нет организаций с количеством сотрудников больше, чем заданное!");
+            } else Outputer.println("There are no organizations in the collection with more employees than the specified number!");
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         } catch (CollectionIsEmptyException exception) {
-            Outputer.printerror("Коллекция пуста!");
+            Outputer.printerror("The collection is empty!");
         } catch (IllegalArgumentException exception) {
-            Outputer.printerror("Организации нет в списке!");
+            Outputer.printerror("Organization not listed!");
         }
         return false;
     }

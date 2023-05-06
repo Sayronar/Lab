@@ -12,7 +12,7 @@ public class FilterContainsNameCommand extends AbstractCommand {
 
     public FilterContainsNameCommand(CollectionManager collectionManager) {
         super("filter_contains_name <name>",
-                "вывести элементы, значение поля name которых содержит заданную подстроку");
+                "display elements whose name field value contains the given substring");
         this.collectionManager = collectionManager;
     }
 
@@ -26,13 +26,13 @@ public class FilterContainsNameCommand extends AbstractCommand {
             if (!filteredInfo.isEmpty()) {
                 Outputer.println(filteredInfo);
                 return true;
-            } else Outputer.println("В коллекции нет организаций с количеством сотрудников больше, чем заданное!");
+            } else Outputer.println("There are no organizations in the collection with more employees than the specified number!");
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Использование: '" + getName() + "'");
+            Outputer.println("Usage: '" + getName() + "'");
         } catch (CollectionIsEmptyException exception) {
-            Outputer.printerror("Коллекция пуста!");
+            Outputer.printerror("The collection is empty!");
         } catch (IllegalArgumentException exception) {
-            Outputer.printerror("Организации нет в списке!");
+            Outputer.printerror("Organization not listed!");
         }
         return false;
     }
