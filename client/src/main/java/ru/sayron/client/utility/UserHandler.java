@@ -148,26 +148,23 @@ public class UserHandler {
                 case "exit":
                     if (!commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
-                case "add_if_min":
+                case "remove_greater":
                     if (!commandArgument.isEmpty()) throw new CommandUsageException("{element}");
                     return ProcessingCode.OBJECT;
-                case "remove_greater":
+                case "remove_lower":
                     if (!commandArgument.isEmpty()) throw new CommandUsageException("{element}");
                     return ProcessingCode.OBJECT;
                 case "history":
                     if (!commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
-                case "sum_of_health":
+                case "count_by_employees_count":
                     if (!commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
-                case "max_by_melee_weapon":
-                    if (!commandArgument.isEmpty()) throw new CommandUsageException();
+                case "filter_contains_name":
+                    if (!commandArgument.isEmpty()) throw new CommandUsageException("<name>");
                     break;
-                case "filter_by_weapon_type":
-                    if (commandArgument.isEmpty()) throw new CommandUsageException("<weapon_type>");
-                    break;
-                case "server_exit":
-                    if (!commandArgument.isEmpty()) throw new CommandUsageException();
+                case "filter_greater_than_employees_count":
+                    if (commandArgument.isEmpty()) throw new CommandUsageException("");
                     break;
                 default:
                     Outputer.println("Command '" + command + "' is not found. Type 'help' for help.");
