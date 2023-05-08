@@ -118,6 +118,14 @@ public class CollectionManager {
         return info.trim();
     }
 
+    /**
+     * @return Collection content or corresponding string if collection is empty.
+     */
+    public String showCollection() {
+        if (organizationsCollection.isEmpty()) return "Коллекция пуста!";
+        return organizationsCollection.stream().reduce("", (sum, m) -> sum += m + "\n\n", (sum1, sum2) -> sum1 + sum2).trim();
+    }
+
     public void addToCollection(Organization organization) {
         organizationsCollection.add(organization);
     }

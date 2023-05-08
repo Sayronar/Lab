@@ -32,12 +32,14 @@ public class CommandManager {
     private Command filterContainsNameCommand;
     private Command filterGreaterThanEmployeesCountCommand;
 
+    private Command serverExitCommand;
+
     public CommandManager(Command helpCommand, Command infoCommand,
                           Command showCommand, Command addCommand, Command updateIdCommand, Command removeByIdCommand,
                           Command clearCommand, Command saveCommand, Command exitCommand, Command executeScriptCommand,
                           Command removeGreaterCommand, Command removeLowerCommand, Command historyCommand,
                           Command employeesCountCommand, Command filterContainsNameCommand,
-                          Command filterGreaterThanEmployeesCountCommand) {
+                          Command filterGreaterThanEmployeesCountCommand, Command serverExitCommand) {
         this.commandHistory = commandHistory;
         this.commands = commands;
         this.helpCommand = helpCommand;
@@ -56,6 +58,7 @@ public class CommandManager {
         this.employeesCountCommand = employeesCountCommand;
         this.filterContainsNameCommand = filterContainsNameCommand;
         this.filterGreaterThanEmployeesCountCommand = filterGreaterThanEmployeesCountCommand;
+        this.serverExitCommand = serverExitCommand;
 
         commands.add(helpCommand);
         commands.add(infoCommand);
@@ -73,6 +76,7 @@ public class CommandManager {
         commands.add(employeesCountCommand);
         commands.add(filterContainsNameCommand);
         commands.add(filterGreaterThanEmployeesCountCommand);
+        commands.add(serverExitCommand);
     }
 
     /**
@@ -220,15 +224,6 @@ public class CommandManager {
      * @param argument Its argument.
      * @return Command exit status.
      */
-    //public boolean addIfMin(String argument) {
-    //    return addIfMinCommand.execute(argument);
-    //}
-
-    /**
-     * Executes needed command.
-     * @param argument Its argument.
-     * @return Command exit status.
-     */
     public boolean removeGreater(String argument) {
         return removeGreaterCommand.execute(argument);
     }
@@ -266,15 +261,6 @@ public class CommandManager {
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
-     * @return Command exit status.
-     */
-    /*public boolean countByEmployeesCount(String argument) {
-        return EmployeesCountCommand.execute(argument);
-    }*/
-
-    /**
-     * Executes needed command.
      // * @param argument Its argument.
      * @return Command exit status.
      */
@@ -293,6 +279,23 @@ public class CommandManager {
      */
     public boolean filterGreaterThanEmployeesCount(String argument) {
         return filterGreaterThanEmployeesCountCommand.execute(argument);
+    }
+
+    /**
+     * Adds command to command history.
+     *
+     * @param commandToStore Command to add.
+     */
+    public void addToHistory(String commandToStore) {
+
+        for (Command command : commands) {
+            if (command.getName().equals(commandToStore)) {
+                for (int i = COMMAND_HISTORY_SIZE - 1; i > 0; i--) {
+                    commandHistory[i] = commandHistory[i - 1];
+                }
+                commandHistory[0] = commandToStore;
+            }
+        }
     }
 
     @Override
