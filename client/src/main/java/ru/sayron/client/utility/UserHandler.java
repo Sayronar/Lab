@@ -75,10 +75,10 @@ public class UserHandler {
                 switch (processingCode) {
                     case OBJECT:
                         OrganizationRaw organizationAddRaw = generateOrganizationAdd();
-                        return new Request(userCommand[0], userCommand[1], (Serializable) organizationAddRaw);
+                        return new Request(userCommand[0], userCommand[1], organizationAddRaw);
                     case UPDATE_OBJECT:
                         OrganizationRaw organizationUpdateRaw = generateOrganizationUpdate();
-                        return new Request(userCommand[0], userCommand[1], (Serializable) organizationUpdateRaw);
+                        return new Request(userCommand[0], userCommand[1], organizationUpdateRaw);
                     case SCRIPT:
                         File scriptFile = new File(userCommand[1]);
                         if (!scriptFile.exists()) throw new FileNotFoundException();
@@ -165,6 +165,9 @@ public class UserHandler {
                     break;
                 case "filter_greater_than_employees_count":
                     if (commandArgument.isEmpty()) throw new CommandUsageException("");
+                    break;
+                case "server_exit":
+                    if (commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
                 default:
                     Outputer.println("Command '" + command + "' is not found. Type 'help' for help.");

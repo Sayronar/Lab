@@ -4,7 +4,7 @@ import ru.sayron.common.data.*;
 
 import java.io.Serializable;
 
-public class OrganizationRaw {
+public class OrganizationRaw implements Serializable {
     private String name;
     private Coordinates coordinates;
     private int annualTurnover;

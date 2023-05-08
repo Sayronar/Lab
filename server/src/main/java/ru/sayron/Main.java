@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class Main {
     public static final int PORT = 1821;
     public static final int CONNECTION_TIMEOUT = 60 * 1000;
-    public static final String ENV_VARIABLE = "LABA";
+    public static final String ENV_VARIABLE = "LAB5";
     public static Logger logger = (Logger) LoggerFactory.getLogger("ServerLogger");
 
     public static void main(String[] args) {
