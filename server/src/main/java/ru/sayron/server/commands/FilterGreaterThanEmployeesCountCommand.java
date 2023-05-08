@@ -1,6 +1,5 @@
 package ru.sayron.server.commands;
 
-
 import ru.sayron.common.exceptions.*;
 import ru.sayron.common.utility.Outputer;
 import ru.sayron.server.utility.CollectionManager;
@@ -9,7 +8,8 @@ public class FilterGreaterThanEmployeesCountCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public FilterGreaterThanEmployeesCountCommand(CollectionManager collectionManager) {
-        super("filter_greater_than_employees_count", "display elements whose employeesCount field value is greater than the given one");
+        super("filter_greater_than_employees_count","<employeesCount>",
+                "display elements whose employeesCount field value is greater than the given one");
         this.collectionManager = collectionManager;
     }
 
@@ -18,9 +18,9 @@ public class FilterGreaterThanEmployeesCountCommand extends AbstractCommand {
      * @return Command exit status.
      */
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument, Object objectArgument) {
         try {
-            if (argument.isEmpty()) throw new WrongAmountOfElementsException();
+            if (argument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
             if (collectionManager.collectionSize() == 0) throw new CollectionIsEmptyException();
             Long employeesCount = Long.parseLong(argument);
             String filteredInfo = collectionManager.employeesCountFilteredInfo(employeesCount);

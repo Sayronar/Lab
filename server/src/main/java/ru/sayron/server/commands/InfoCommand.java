@@ -1,8 +1,8 @@
 package ru.sayron.server.commands;
 
 import ru.sayron.common.exceptions.WrongAmountOfElementsException;
-import ru.sayron.common.utility.Outputer;
 import ru.sayron.server.utility.CollectionManager;
+import ru.sayron.server.utility.ResponseOutputer;
 
 import java.time.LocalDateTime;
 
@@ -13,18 +13,19 @@ public class InfoCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public InfoCommand(CollectionManager collectionManager) {
-        super("info", "display information about the collection");
+        super("info","", "display information about the collection");
         this.collectionManager = collectionManager;
     }
 
     /**
      * Executes the command.
+     *
      * @return Command exit status.
      */
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String stringArgument, Object objectArgument) {
         try {
-            if (!argument.isEmpty()) throw new WrongAmountOfElementsException();
+            if (!stringArgument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
             LocalDateTime lastInitTime = collectionManager.getLastInitTime();
             String lastInitTimeString = (lastInitTime == null) ? "initialization has not yet taken place in this session" :
                     lastInitTime.toLocalDate().toString() + " " + lastInitTime.toLocalTime().toString();
@@ -33,14 +34,14 @@ public class InfoCommand extends AbstractCommand {
             String lastSaveTimeString = (lastSaveTime == null) ? "this session has not yet been saved" :
                     lastSaveTime.toLocalDate().toString() + " " + lastSaveTime.toLocalTime().toString();
 
-            Outputer.println("Collection details:");
-            Outputer.println(" Type: " + collectionManager.collectionType());
-            Outputer.println(" Amount of elements: " + collectionManager.collectionSize());
-            Outputer.println(" Date last saved: " + lastSaveTimeString);
-            Outputer.println(" Date of last initialization: " + lastInitTimeString);
+            ResponseOutputer.appendln("Collection details:");
+            ResponseOutputer.appendln(" Type: " + collectionManager.collectionType());
+            ResponseOutputer.appendln(" Amount of elements: " + collectionManager.collectionSize());
+            ResponseOutputer.appendln(" Date last saved:: " + lastSaveTimeString);
+            ResponseOutputer.appendln(" Date of last initialization: " + lastInitTimeString);
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Usage: '" + getName() + "'");
+            ResponseOutputer.appendln("Usage: '" + getName() + " " + getUsage() + "'");
         }
         return false;
     }

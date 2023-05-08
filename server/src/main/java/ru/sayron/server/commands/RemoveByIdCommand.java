@@ -1,6 +1,5 @@
 package ru.sayron.server.commands;
 
-
 import ru.sayron.common.data.Organization;
 import ru.sayron.common.exceptions.*;
 import ru.sayron.common.utility.Outputer;
@@ -13,7 +12,7 @@ public class RemoveByIdCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public RemoveByIdCommand(CollectionManager collectionManager) {
-        super("remove_by_id <ID>", "remove item from collection by ID");
+        super("remove_by_id","<ID>", "remove item from collection by ID");
         this.collectionManager = collectionManager;
     }
 
@@ -22,11 +21,11 @@ public class RemoveByIdCommand extends AbstractCommand {
      * @return Command exit status.
      */
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String stringArgument, Object objectArgument) {
         try {
-            if (argument.isEmpty()) throw new WrongAmountOfElementsException();
+            if (stringArgument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
             if (collectionManager.collectionSize() == 0) throw new CollectionIsEmptyException();
-            Long id = Long.parseLong(argument);
+            Long id = Long.parseLong(stringArgument);
             Organization organizationToRemove = collectionManager.getById(id);
             if (organizationToRemove == null) throw new OrganizationNotFoundException();
             collectionManager.removeFromCollection(organizationToRemove);

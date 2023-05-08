@@ -16,7 +16,7 @@ public class UpdateIdCommand extends AbstractCommand {
     private OrganizationAsker organizationAsker;
 
     public UpdateIdCommand(CollectionManager collectionManager, OrganizationAsker organizationAsker) {
-        super("update <ID> {element}", "update collection element value by ID");
+        super("update","<ID> {element}", "update collection element value by ID");
         this.collectionManager = collectionManager;
         this.organizationAsker = organizationAsker;
     }
@@ -26,9 +26,9 @@ public class UpdateIdCommand extends AbstractCommand {
      * @return Command exit status.
      */
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument, Object objectArgument) {
         try {
-            if (argument.isEmpty()) throw new WrongAmountOfElementsException();
+            if (argument.isEmpty() || objectArgument == null) throw new WrongAmountOfElementsException();
             if (collectionManager.collectionSize() == 0) throw new CollectionIsEmptyException();
 
             Long id = Long.parseLong(argument);

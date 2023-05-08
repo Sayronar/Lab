@@ -3,10 +3,13 @@ package ru.sayron.server.commands;
 import ru.sayron.common.exceptions.WrongAmountOfElementsException;
 import ru.sayron.server.utility.ResponseOutputer;
 
-public class HelpCommand extends AbstractCommand {
+/**
+ * Command 'server_exit'. Checks for wrong arguments then do nothing.
+ */
+public class ServerExitCommand extends AbstractCommand {
 
-    public HelpCommand() {
-        super("help","", "display help on available commands");
+    public ServerExitCommand() {
+        super("server_exit", "", "завершить работу сервера");
     }
 
     /**
@@ -18,9 +21,10 @@ public class HelpCommand extends AbstractCommand {
     public boolean execute(String stringArgument, Object objectArgument) {
         try {
             if (!stringArgument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
+            ResponseOutputer.appendln("Работа сервера успешно завершена!");
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            ResponseOutputer.appendln("Usage: '" + getName() + " " + getUsage() + "'");
+            ResponseOutputer.appendln("Использование: '" + getName() + " " + getUsage() + "'");
         }
         return false;
     }

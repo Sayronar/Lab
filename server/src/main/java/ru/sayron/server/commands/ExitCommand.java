@@ -1,8 +1,7 @@
 package ru.sayron.server.commands;
 
-
 import ru.sayron.common.exceptions.WrongAmountOfElementsException;
-import ru.sayron.common.utility.Outputer;
+import ru.sayron.server.utility.ResponseOutputer;
 
 /**
  * Command 'exit'. Checks for wrong arguments then do nothing.
@@ -10,20 +9,21 @@ import ru.sayron.common.utility.Outputer;
 public class ExitCommand extends AbstractCommand {
 
     public ExitCommand() {
-        super("exit", "terminate program (without saving to file)");
+        super("exit","", "terminate program");
     }
 
     /**
      * Executes the command.
+     *
      * @return Command exit status.
      */
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String stringArgument, Object objectArgument) {
         try {
-            if (!argument.isEmpty()) throw new WrongAmountOfElementsException();
+            if (!stringArgument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Usage: '" + getName() + "'");
+            ResponseOutputer.appendln("Usage: '" + getName() + " " + getUsage() + "'");
         }
         return false;
     }

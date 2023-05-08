@@ -6,5 +6,6 @@ package ru.sayron.server.commands;
 public interface Command {
     String getDescription();
     String getName();
-    boolean execute(String argument);
+    String getUsage();
+    boolean execute(String stringArgument, Object objectArgument);
 }

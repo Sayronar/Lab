@@ -5,9 +5,11 @@ package ru.sayron.server.commands;
 public abstract class AbstractCommand implements Command {
     private String name;
     private String description;
+    private String usage;
 
-    public AbstractCommand(String name, String description) {
+    public AbstractCommand(String name, String usage, String description) {
         this.name = name;
+        this.usage = usage;
         this.description = description;
     }
 
@@ -16,6 +18,14 @@ public abstract class AbstractCommand implements Command {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Usage of the command.
+     */
+    @Override
+    public String getUsage() {
+        return usage;
     }
 
     /**

@@ -2,7 +2,7 @@ package ru.sayron.server.commands;
 
 
 import ru.sayron.common.exceptions.WrongAmountOfElementsException;
-import ru.sayron.common.utility.Outputer;
+import ru.sayron.server.utility.ResponseOutputer;
 
 /**
  * Command 'history'. It's here just for logical structure.
@@ -10,20 +10,21 @@ import ru.sayron.common.utility.Outputer;
 public class HistoryCommand extends AbstractCommand {
 
     public HistoryCommand() {
-        super("history", "display history of used commands");
+        super("history","", "display history of used commands");
     }
 
     /**
      * Executes the command.
+     *
      * @return Command exit status.
      */
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String stringArgument, Object objectArgument) {
         try {
-            if (!argument.isEmpty()) throw new WrongAmountOfElementsException();
+            if (!stringArgument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Usage: '" + getName() + "'");
+            ResponseOutputer.appendln("Usage: '" + getName() + " " + getUsage() + "'");
         }
         return false;
     }

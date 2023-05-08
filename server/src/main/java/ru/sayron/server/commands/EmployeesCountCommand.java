@@ -1,6 +1,5 @@
 package ru.sayron.server.commands;
 
-
 import ru.sayron.common.exceptions.*;
 import ru.sayron.common.utility.Outputer;
 import ru.sayron.server.utility.CollectionManager;
@@ -9,7 +8,8 @@ public class EmployeesCountCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public EmployeesCountCommand(CollectionManager collectionManager) {
-        super("count_by_employees_count", "display the number of elements whose employeesCount field value is equal to the given value");
+        super("count_by_employees_count","<employeesCount>",
+                "вывести количество элементов, значение поля employeesCount которых равно заданному");
         this.collectionManager = collectionManager;
     }
 
@@ -18,9 +18,9 @@ public class EmployeesCountCommand extends AbstractCommand {
      * @return Command exit status.
      */
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument, Object objectArgument) {
         try {
-            if (argument.isEmpty()) throw new WrongAmountOfElementsException();
+            if (argument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
             if (collectionManager.collectionSize() == 0) throw new CollectionIsEmptyException();
             Long employeesCount = Long.parseLong(argument);
             String filteredInfo = String.valueOf(collectionManager.countByEmployeesCount(employeesCount));

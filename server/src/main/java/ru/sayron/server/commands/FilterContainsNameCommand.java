@@ -1,6 +1,5 @@
 package ru.sayron.server.commands;
 
-
 import ru.sayron.common.data.Organization;
 import ru.sayron.common.exceptions.*;
 import ru.sayron.common.utility.Outputer;
@@ -11,15 +10,15 @@ public class FilterContainsNameCommand extends AbstractCommand {
     private CollectionManager collectionManager;
 
     public FilterContainsNameCommand(CollectionManager collectionManager) {
-        super("filter_contains_name <name>",
+        super("filter_contains_name","<name>",
                 "display elements whose name field value contains the given substring");
         this.collectionManager = collectionManager;
     }
 
     @Override
-    public boolean execute(String argument) {
+    public boolean execute(String argument, Object objectArgument) {
         try {
-            if (argument.isEmpty()) throw new WrongAmountOfElementsException();
+            if (argument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
             if (collectionManager.collectionSize() == 0) throw new CollectionIsEmptyException();
             String containsName = argument;
             String filteredInfo = collectionManager.containsNameFilteredInfo(containsName);
