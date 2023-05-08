@@ -94,18 +94,19 @@ public class CommandManager {
     }
 
     /**
-     * Adds command to command history.
-     * @param commandToStore Command to add.
+     * Prints info about the all commands.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
+     * @return Command exit status.
      */
-    public void addToHistory(String commandToStore) {
-        for (Command command : commands) {
-            if (command.getName() != null && command.getName().split(" ")[0].equals(commandToStore)) {
-                for (int i = COMMAND_HISTORY_SIZE-1; i>0; i--) {
-                    commandHistory[i] = commandHistory[i-1];
-                }
-                commandHistory[0] = commandToStore;
+    public boolean help(String stringArgument, Object objectArgument) {
+        if (helpCommand.execute(stringArgument, objectArgument)) {
+            for (Command command : commands) {
+                ResponseOutputer.appendtable(command.getName() + " " + command.getUsage(), command.getDescription());
             }
-        }
+            return true;
+        } else return false;
     }
 
     /**
@@ -114,136 +115,140 @@ public class CommandManager {
      * @return Command exit status.
      */
     public boolean noSuchCommand(String command) {
-        Outputer.println("Command '" + command + "' not found. Type 'help' for help.");
+        Outputer.println("Команда '" + command + "' не найдена. Наберите 'help' для справки.");
         return false;
     }
 
     /**
-     * Prints info about the all commands.
-     * @param argument Its argument.
+     * Executes needed command.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean help(String argument) {
-        if (helpCommand.execute(argument)) {
-            for (Command command : commands) {
-                Outputer.printtable(command.getName(), command.getDescription());
-            }
-            return true;
-        } else return false;
+    public boolean info(String stringArgument, Object objectArgument) {
+        return infoCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean info(String argument) {
-        return infoCommand.execute(argument);
+    public boolean show(String stringArgument, Object objectArgument) {
+        return showCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean show(String argument) {
-        return showCommand.execute(argument);
+    public boolean add(String stringArgument, Object objectArgument) {
+        return addCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean add(String argument) {
-        return addCommand.execute(argument);
+    public boolean update(String stringArgument, Object objectArgument) {
+        return updateIdCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-
-    /**
-     * Executes needed command.
-     * @param argument Its argument.
-     * @return Command exit status.
-     */
-    public boolean update(String argument) {
-        return updateIdCommand.execute(argument);
+    public boolean removeById(String stringArgument, Object objectArgument) {
+        return removeByIdCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean removeById(String argument) {
-        return removeByIdCommand.execute(argument);
+    public boolean clear(String stringArgument, Object objectArgument) {
+        return clearCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean clear(String argument) {
-        return clearCommand.execute(argument);
+    public boolean save(String stringArgument, Object objectArgument) {
+        return saveCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean save(String argument) {
-        return saveCommand.execute(argument);
+    public boolean exit(String stringArgument, Object objectArgument) {
+        return exitCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean exit(String argument) {
-        return exitCommand.execute(argument);
+    public boolean executeScript(String stringArgument, Object objectArgument) {
+        return executeScriptCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean executeScript(String argument) {
-        return executeScriptCommand.execute(argument);
+    public boolean removeGreater(String stringArgument, Object objectArgument) {
+        return removeGreaterCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean removeGreater(String argument) {
-        return removeGreaterCommand.execute(argument);
-    }
-
-    /**
-     * Executes needed command.
-     * @param argument Its argument.
-     * @return Command exit status.
-     */
-    public boolean removeLower(String argument) {
-        return removeLowerCommand.execute(argument);
+    public boolean removeLower(String stringArgument, Object objectArgument) {
+        return removeLowerCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Prints the history of used commands.
-     * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean history(String argument) {
-        if (historyCommand.execute(argument)) {
+    public boolean history(String stringArgument, Object objectArgument) {
+        if (historyCommand.execute(stringArgument, objectArgument)) {
             try {
                 if (commandHistory.length == 0) throw new HistoryIsEmptyException();
 
@@ -261,24 +266,46 @@ public class CommandManager {
 
     /**
      * Executes needed command.
-     // * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean countByEmployeesCount(String argument) {
-        return employeesCountCommand.execute(argument);
-    }
-
-    public boolean filterContainsName(String argument) {
-        return filterContainsNameCommand.execute(argument);
+    public boolean countByEmployeesCount(String stringArgument, Object objectArgument) {
+        return employeesCountCommand.execute(stringArgument, objectArgument);
     }
 
     /**
      * Executes needed command.
-     // * @param argument Its argument.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
      * @return Command exit status.
      */
-    public boolean filterGreaterThanEmployeesCount(String argument) {
-        return filterGreaterThanEmployeesCountCommand.execute(argument);
+    public boolean filterContainsName(String stringArgument, Object objectArgument) {
+        return filterContainsNameCommand.execute(stringArgument, objectArgument);
+    }
+
+    /**
+     * Executes needed command.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
+     * @return Command exit status.
+     */
+    public boolean filterGreaterThanEmployeesCount(String stringArgument, Object objectArgument) {
+        return filterGreaterThanEmployeesCountCommand.execute(stringArgument, objectArgument);
+    }
+
+    /**
+     * Executes needed command.
+     *
+     * @param stringArgument Its string argument.
+     * @param objectArgument Its object argument.
+     * @return Command exit status.
+     */
+    public boolean serverExit(String stringArgument, Object objectArgument) {
+        return serverExitCommand.execute(stringArgument, objectArgument);
     }
 
     /**
