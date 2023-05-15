@@ -17,5 +17,6 @@
     <orderEntry type="library" name="slf4j-api-2.0.7" level="project" />
     <orderEntry type="library" name="logback-classic-1.4.7" level="project" />
     <orderEntry type="library" name="logback-core-1.4.7" level="project" />
+    <orderEntry type="library" name="stax2-api-4.2.1" level="project" />
   </component>
 </module>

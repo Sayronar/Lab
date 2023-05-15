@@ -2,9 +2,10 @@ package ru.sayron.common.data;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Coordinates {
+public class Coordinates implements Serializable {
     @JacksonXmlProperty(localName = "x")
     private long x;
     @JacksonXmlProperty(localName = "y")

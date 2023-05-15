@@ -22,6 +22,7 @@ public class Main {
     public static void main(String[] args) {
         FileManager collectionFileManager = new FileManager(ENV_VARIABLE);
         CollectionManager collectionManager = new CollectionManager(collectionFileManager);
+        collectionManager.loadCollection();
         OrganizationAsker organizationAsker = new OrganizationAsker(new Scanner(System.in));
         CommandManager commandManager = new CommandManager(
                 new HelpCommand(),

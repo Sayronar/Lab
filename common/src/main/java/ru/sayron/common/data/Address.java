@@ -1,9 +1,11 @@
 package ru.sayron.common.data;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Address {
+public class Address implements Serializable {
     @JacksonXmlProperty(localName = "street")
     private String street; //Строка не может быть пустой, Поле не может быть null
     @JacksonXmlProperty(localName = "town")
