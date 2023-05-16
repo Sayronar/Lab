@@ -1,18 +1,15 @@
 package ru.sayron.server.commands;
 
-import ru.sayron.server.utility.CollectionManager;
-import ru.sayron.common.exceptions.*;
+import ru.sayron.common.exceptions.WrongAmountOfElementsException;
 import ru.sayron.server.utility.ResponseOutputer;
 
 /**
- * Command 'show'. Shows information about all elements of the collection.
+ * Command 'exit'. Checks for wrong arguments then do nothing.
  */
-public class ShowCommand extends AbstractCommand {
-    private CollectionManager collectionManager;
+public class ExitCommand extends AbstractCommand {
 
-    public ShowCommand(CollectionManager collectionManager) {
-        super("show","", "display all elements of the collection");
-        this.collectionManager = collectionManager;
+    public ExitCommand() {
+        super("exit","", "terminate program");
     }
 
     /**
@@ -24,7 +21,6 @@ public class ShowCommand extends AbstractCommand {
     public boolean execute(String stringArgument, Object objectArgument) {
         try {
             if (!stringArgument.isEmpty() || objectArgument != null) throw new WrongAmountOfElementsException();
-            ResponseOutputer.appendln(collectionManager.showCollection());
             return true;
         } catch (WrongAmountOfElementsException exception) {
             ResponseOutputer.appendln("Usage: '" + getName() + " " + getUsage() + "'");

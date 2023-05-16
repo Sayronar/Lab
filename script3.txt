@@ -1,0 +1,3 @@
+java -jar Server.jar &
+java -jar Client.jar script1.txt &
+java -jar Client.jar script2.txt &
