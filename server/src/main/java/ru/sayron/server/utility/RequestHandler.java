@@ -80,7 +80,7 @@ public class RequestHandler {
                 if (!commandManager.exit(commandStringArgument, commandObjectArgument))
                     return ResponseCode.ERROR;
                 break;
-            case "add_if_min":
+            case "count_by_employees_count":
                 if (!commandManager.countByEmployeesCount(commandStringArgument, commandObjectArgument))
                     return ResponseCode.ERROR;
                 break;
@@ -92,15 +92,15 @@ public class RequestHandler {
                 if (!commandManager.history(commandStringArgument, commandObjectArgument))
                     return ResponseCode.ERROR;
                 break;
-            case "sum_of_health":
+            case "remove_lower":
                 if (!commandManager.removeLower(commandStringArgument, commandObjectArgument))
                     return ResponseCode.ERROR;
                 break;
-            case "max_by_melee_weapon":
+            case "filter_contains_name":
                 if (!commandManager.filterContainsName(commandStringArgument, commandObjectArgument))
                     return ResponseCode.ERROR;
                 break;
-            case "filter_by_weapon_type":
+            case "filter_greater_than_employees_count":
                 if (!commandManager.filterGreaterThanEmployeesCount(commandStringArgument, commandObjectArgument))
                     return ResponseCode.ERROR;
                 break;

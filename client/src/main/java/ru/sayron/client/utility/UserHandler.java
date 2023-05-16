@@ -12,7 +12,6 @@ import ru.sayron.common.utility.Outputer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Stack;
@@ -158,10 +157,10 @@ public class UserHandler {
                     if (!commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
                 case "count_by_employees_count":
-                    if (!commandArgument.isEmpty()) throw new CommandUsageException();
+                    if (commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
                 case "filter_contains_name":
-                    if (!commandArgument.isEmpty()) throw new CommandUsageException("<name>");
+                    if (commandArgument.isEmpty()) throw new CommandUsageException("<name>");
                     break;
                 case "filter_greater_than_employees_count":
                     if (commandArgument.isEmpty()) throw new CommandUsageException("");

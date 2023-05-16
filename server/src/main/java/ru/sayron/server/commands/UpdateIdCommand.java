@@ -3,6 +3,7 @@ package ru.sayron.server.commands;
 import ru.sayron.client.utility.OrganizationAsker;
 import ru.sayron.common.data.*;
 import ru.sayron.common.exceptions.*;
+import ru.sayron.common.interaction.OrganizationRaw;
 import ru.sayron.common.utility.Outputer;
 import ru.sayron.server.utility.CollectionManager;
 
@@ -32,17 +33,19 @@ public class UpdateIdCommand extends AbstractCommand {
             if (collectionManager.collectionSize() == 0) throw new CollectionIsEmptyException();
 
             Long id = Long.parseLong(argument);
+            if (id <= 0) throw new NumberFormatException();
             Organization organization = collectionManager.getById(id);
             if (organization == null) throw new OrganizationNotFoundException();
 
-            String name = organization.getName();
-            Coordinates coordinates = organization.getCoordinates();
+            OrganizationRaw organizationRaw = (OrganizationRaw) objectArgument;
+            String name = organizationRaw.getName() == null ? organization.getName() : organizationRaw.getName();
+            Coordinates coordinates = organizationRaw.getCoordinates() == null ? organization.getCoordinates() : organizationRaw.getCoordinates();
             LocalDateTime creationDate = organization.getCreationDate();
-            int turnover = organization.getAnnualTurnover();
-            String fullName = organization.getFullName();
-            Long employeesCount = organization.getEmployeesCount();
-            OrganizationType type = organization.getType();
-            Address officialAddress = organization.getOfficialAddress();
+            int turnover = organizationRaw.getAnnualTurnover() == -1 ? organization.getAnnualTurnover() : organizationRaw.getAnnualTurnover();
+            String fullName = organizationRaw.getFullName() == null ? organization.getFullName() : organizationRaw.getFullName();
+            Long employeesCount = organizationRaw.getEmployeesCount() == null ? organization.getEmployeesCount() : organizationRaw.getEmployeesCount();
+            OrganizationType type = organizationRaw.getType() == null ? organization.getType() : organizationRaw.getType();
+            Address officialAddress = organizationRaw.getOfficialAddress() == null ? organization.getOfficialAddress() : organizationRaw.getOfficialAddress();
 
             collectionManager.removeFromCollection(organization);
 
