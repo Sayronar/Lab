@@ -23,13 +23,12 @@ public class Main {
         FileManager collectionFileManager = new FileManager(ENV_VARIABLE);
         CollectionManager collectionManager = new CollectionManager(collectionFileManager);
         collectionManager.loadCollection();
-        OrganizationAsker organizationAsker = new OrganizationAsker(new Scanner(System.in));
         CommandManager commandManager = new CommandManager(
                 new HelpCommand(),
                 new InfoCommand(collectionManager),
                 new ShowCommand(collectionManager),
                 new AddCommand(collectionManager),
-                new UpdateIdCommand(collectionManager, organizationAsker),
+                new UpdateIdCommand(collectionManager),
                 new RemoveByIdCommand(collectionManager),
                 new ClearCommand(collectionManager),
                 new SaveCommand(collectionManager),

@@ -163,10 +163,10 @@ public class UserHandler {
                     if (commandArgument.isEmpty()) throw new CommandUsageException("<name>");
                     break;
                 case "filter_greater_than_employees_count":
-                    if (commandArgument.isEmpty()) throw new CommandUsageException("");
+                    if (!commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
                 case "server_exit":
-                    if (commandArgument.isEmpty()) throw new CommandUsageException();
+                    if (!commandArgument.isEmpty()) throw new CommandUsageException();
                     break;
                 default:
                     Outputer.println("Command '" + command + "' is not found. Type 'help' for help.");

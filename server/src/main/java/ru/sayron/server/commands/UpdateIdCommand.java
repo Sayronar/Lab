@@ -6,6 +6,7 @@ import ru.sayron.common.exceptions.*;
 import ru.sayron.common.interaction.OrganizationRaw;
 import ru.sayron.common.utility.Outputer;
 import ru.sayron.server.utility.CollectionManager;
+import ru.sayron.server.utility.ResponseOutputer;
 
 import java.time.LocalDateTime;
 
@@ -14,12 +15,10 @@ import java.time.LocalDateTime;
  */
 public class UpdateIdCommand extends AbstractCommand {
     private CollectionManager collectionManager;
-    private OrganizationAsker organizationAsker;
 
-    public UpdateIdCommand(CollectionManager collectionManager, OrganizationAsker organizationAsker) {
+    public UpdateIdCommand(CollectionManager collectionManager) {
         super("update","<ID> {element}", "update collection element value by ID");
         this.collectionManager = collectionManager;
-        this.organizationAsker = organizationAsker;
     }
 
     /**
@@ -48,15 +47,6 @@ public class UpdateIdCommand extends AbstractCommand {
             Address officialAddress = organizationRaw.getOfficialAddress() == null ? organization.getOfficialAddress() : organizationRaw.getOfficialAddress();
 
             collectionManager.removeFromCollection(organization);
-
-            if (organizationAsker.askQuestion("Do you want to change the name of the organization?")) name = organizationAsker.askName();
-            if (organizationAsker.askQuestion("Do you want to change the coordinates of the organization?")) coordinates = organizationAsker.askCoordinates();
-            if (organizationAsker.askQuestion("Do you want to change the annual turnover of the organization?")) turnover = organizationAsker.askTurnover();
-            if (organizationAsker.askQuestion("Do you want to change the full name of the organization?")) fullName = organizationAsker.askFullName();
-            if (organizationAsker.askQuestion("Do you want to change the number of employees in your organization?")) employeesCount = organizationAsker.askEmployeesCount();
-            if (organizationAsker.askQuestion("Do you want to change the organization type?")) type = organizationAsker.askType();
-            if (organizationAsker.askQuestion("Do you want to change the address of the organization?")) officialAddress = organizationAsker.askAddress();
-
             collectionManager.addToCollection(new Organization(
                     id,
                     name,
@@ -68,17 +58,19 @@ public class UpdateIdCommand extends AbstractCommand {
                     type,
                     officialAddress
             ));
-            Outputer.println("The organization has been successfully changed!");
+            ResponseOutputer.appendln("The organization has been successfully changed!");
             return true;
         } catch (WrongAmountOfElementsException exception) {
-            Outputer.println("Usage: '" + getName() + "'");
+            ResponseOutputer.appendln("Usage: '" + getName() + "'");
         } catch (CollectionIsEmptyException exception) {
-            Outputer.printerror("The collection is empty!");
+            ResponseOutputer.appenderror("The collection is empty!");
         } catch (NumberFormatException exception) {
-            Outputer.printerror("ID must be represented by a number!");
+            ResponseOutputer.appenderror("ID must be represented by a number!");
         } catch (OrganizationNotFoundException exception) {
-            Outputer.printerror("There is no soldier with this ID in the collection!");
-        } catch (IncorrectInputInScriptException exception) {}
+            ResponseOutputer.appenderror("There is no organization with this ID in the collection!");
+        } catch (ClassCastException exception) {
+            ResponseOutputer.appenderror("The object passed by the client is invalid!");
+        }
         return false;
     }
 }
