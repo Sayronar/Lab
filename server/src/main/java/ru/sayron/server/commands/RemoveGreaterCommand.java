@@ -5,7 +5,6 @@ import ru.sayron.common.exceptions.*;
 import ru.sayron.common.interaction.OrganizationRaw;
 import ru.sayron.common.utility.Outputer;
 import ru.sayron.server.utility.CollectionManager;
-import ru.sayron.client.utility.OrganizationAsker;
 import ru.sayron.server.utility.ResponseOutputer;
 
 import java.time.LocalDateTime;

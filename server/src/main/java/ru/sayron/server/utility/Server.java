@@ -1,6 +1,5 @@
 package ru.sayron.server.utility;
 
-import ru.sayron.Main;
 import ru.sayron.common.exceptions.ClosingSocketException;
 import ru.sayron.common.exceptions.ConnectionErrorException;
 import ru.sayron.common.exceptions.OpeningServerSocketException;
@@ -8,6 +7,7 @@ import ru.sayron.common.interaction.Request;
 import ru.sayron.common.interaction.Response;
 import ru.sayron.common.interaction.ResponseCode;
 import ru.sayron.common.utility.Outputer;
+import ru.sayron.server.Main;
 
 import java.io.*;
 import java.net.ServerSocket;
